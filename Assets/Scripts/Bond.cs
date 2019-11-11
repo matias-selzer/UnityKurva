@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Bond 
 {
-
 	public int startPos,endPos;
 
 	public Bond (){

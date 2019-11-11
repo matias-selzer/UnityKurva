@@ -2,30 +2,22 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Atom
+public abstract class Atom
 {
-
 	private Vector3 position;
-	private string type;
-
-	public Atom(float x ,float y, float z, string t){
-		position.x = x;
-		position.y = y;
-		position.z = z;
-		type = t;
-	}
+	private float size;
+	private Color color;
+	private float opacity;
 
 	public Atom (Vector3 pos){
 		position=pos;
+		size = 1.0f;
+		color = Color.grey;
+		opacity = 1.0f;
 	}
 
 	public Vector3 getPosition(){
 		return position;
 	}
 
-	public string getType(){
-		return type;
-	}
-
-    
 }

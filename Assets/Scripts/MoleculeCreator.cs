@@ -17,11 +17,13 @@ public class MoleculeCreator : MonoBehaviour
 
 
 	public void createMolecule(ArrayList atoms,ArrayList bonds){
-		showAtoms (atoms);
-		showBonds (atoms,bonds);
-		//Debug.Log("pepe");
+		//showAtoms (atoms);
+		//showBonds (atoms,bonds);
+		Molecule newMolecule = new Molecule(atoms,bonds);
+		//agregar al moleculesManager
 	}
 
+	/*
 	public void showAtoms(ArrayList atoms){
 		for (int i = 0; i < atoms.Count; i++) {
 			//Debug.Log (((Molecule)molecules [i]).getType().Equals ("C"));
@@ -47,4 +49,6 @@ public class MoleculeCreator : MonoBehaviour
 			l.SetupLine ();
 		}
 	}
+*/
+
 }

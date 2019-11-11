@@ -4,25 +4,28 @@ using UnityEngine;
 using System.Text.RegularExpressions;
 using System;
 
-public class sdfReaderMultiple : MonoBehaviour
+public class MoleculesCreatorFromSDF : MoleculesCreator
 {
-	public ViewController controller;
-
+	private string sdfData;
 	private string[] dataLines;
 	private int pos;
+	private ArrayList newMolecules;
 
-	void Start(){
-		#if !UNITY_EDITOR && UNITY_WEBGL
-		WebGLInput.captureAllKeyboardInput = false;
-		#endif
+	public MoleculesCreatorFromSDF(string data){
+		sdfData=data;
 	}
 
-	public void loadDataFromWebPage(string data){
-		data = deleteMultipleSpaces (data);
+	public override ArrayList generateMolecules(){
+		newMolecules = new ArrayList();
+
+		sdfData = deleteMultipleSpaces (sdfData);
 		pos=0;
-		dataLines = getSeparateLines (data);
+		dataLines = getSeparateLines (sdfData);
 		parseData ();
+
+		return newMolecules;
 	}
+
 
 	string deleteMultipleSpaces(string d){
 		RegexOptions options = RegexOptions.None;
@@ -35,12 +38,13 @@ public class sdfReaderMultiple : MonoBehaviour
 	}
 
 	void parseData(){
-		/*ArrayList atoms = new ArrayList ();
+		ArrayList atoms = new ArrayList ();
 		ArrayList bonds = new ArrayList ();
 		while (!reachEndOfFile()) {
 			string[] line = getElementsOfSingleLine(); 
 			if (isAtomsLine(line)) {
-				Atom a = new Atom (float.Parse (line [1]), float.Parse (line [2]), float.Parse (line [3]), line [4]);
+				Atom a = AtomsFactory.getInstance().createAtom(new Vector3(float.Parse (line [1]), float.Parse (line [2]), float.Parse (line [3])),line [4]);
+				//Atom a = new Atom (float.Parse (line [1]), float.Parse (line [2]), float.Parse (line [3]), line [4]);
 				atoms.Add (a);
 			} else if (isBondsLine(line)) {
 				Bond b = new Bond (int.Parse (line [1]), int.Parse (line [2]));
@@ -51,7 +55,7 @@ public class sdfReaderMultiple : MonoBehaviour
 				bonds = new ArrayList ();
 			}
 			pos++;
-		}*/
+		}
 	}
 
 	bool isEndOfMolecule(string[] line){
@@ -75,11 +79,9 @@ public class sdfReaderMultiple : MonoBehaviour
 	}
 
 	void createMolecule(ArrayList atoms,ArrayList bonds){
-		//GetComponent<MoleculeCreator>().createMolecule (atoms, bonds);
+		newMolecules.Add(new Molecule(atoms,bonds));
 
 	}
-
-
 
 
 }

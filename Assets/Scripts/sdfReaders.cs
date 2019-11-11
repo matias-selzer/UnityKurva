@@ -13,7 +13,7 @@ public class sdfReaders : MonoBehaviour
 	public Material lineMaterial;
 
     // Start is called before the first frame update
-    void Start()
+	/* void Start()
     {
 		atoms = new ArrayList ();
 		bonds= new ArrayList ();
@@ -72,5 +72,5 @@ public class sdfReaders : MonoBehaviour
 
 			l.SetupLine ();
 		}
-	}
+	}*/
 }

@@ -8,6 +8,7 @@ public class Controller : MonoBehaviour
 	public GameObject rotatedObject;
 	private int speed;
 
+
     // Start is called before the first frame update
     void Start()
     {
