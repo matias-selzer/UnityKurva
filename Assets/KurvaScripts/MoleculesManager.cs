@@ -31,7 +31,7 @@ public class MoleculesManager : MonoBehaviour
         {
             for(int i = 0; i < m.atomsCount(); i++)
             {
-                VisualCarbon vc = new VisualCarbon(m.getAtom(i).getPosition());
+                VisualItem newItem = VisualItemsFactory.getInstance().createVisualAtom(m.getAtom(i));
             }
         }
 

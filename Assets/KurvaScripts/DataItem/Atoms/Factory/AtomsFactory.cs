@@ -15,7 +15,6 @@ public class AtomsFactory
 
 	public Atom createAtom(Vector3 position,string type){
 		Atom newAtom;
-        Debug.Log(position.ToString());
 		if(type.Equals("N")){
 			newAtom=new Nytrogen(position);            
 		}else if(type.Equals("O")){
