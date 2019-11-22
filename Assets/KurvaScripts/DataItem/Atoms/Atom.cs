@@ -8,4 +8,9 @@ public abstract class Atom:DataItem
 
     public Atom(Vector3 pos) { position = pos; }
 
+    public Vector3 getPosition()
+    {
+        return position;
+    }
+
 }

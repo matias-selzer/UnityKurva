@@ -8,7 +8,7 @@ public class VisualCarbon : VisualAtom
     
     public VisualCarbon(Vector3 position) : base(position)
     {
-        visualObject.GetComponent<Material>().color = defaultColor;        
+        visualObject.GetComponent<Renderer>().material.color = defaultColor;        
     }
 
 }

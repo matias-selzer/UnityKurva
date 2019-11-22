@@ -5,6 +5,7 @@ using UnityEngine;
 public class MoleculesManager : MonoBehaviour
 {
     private List<Molecule> molecules;
+    private List<VisualItem> visualItems;
 
     // Start is called before the first frame update
     void Start()
@@ -21,5 +22,18 @@ public class MoleculesManager : MonoBehaviour
     public void setMolecules(List<Molecule> molecules)
     {
         this.molecules = molecules;
+    }
+
+    public void renderMolecules()
+    {
+        visualItems = new List<VisualItem>();
+        foreach(Molecule m in molecules)
+        {
+            for(int i = 0; i < m.atomsCount(); i++)
+            {
+                VisualCarbon vc = new VisualCarbon(m.getAtom(i).getPosition());
+            }
+        }
+
     }
 }

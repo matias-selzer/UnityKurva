@@ -21,5 +21,6 @@ public class Proxy : MonoBehaviour
     {
         List<Molecule> molecules = new SDFMoleculesCreator().createMolecules(new SDFdata(data));
         GetComponent<MoleculesManager>().setMolecules(molecules);
+        GetComponent<MoleculesManager>().renderMolecules();
     }
 }
