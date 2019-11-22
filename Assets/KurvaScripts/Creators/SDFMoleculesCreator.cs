@@ -13,12 +13,17 @@ public class SDFMoleculesCreator : MoleculesCreator
     public override List<Molecule> createMolecules(MoleculesData data)
     {
         string stringData = deleteMultipleSpaces(data.getStringData());
+        stringData = replaceDotsForColon(stringData);
         pos = 0;
         dataLines = getSeparateLines(stringData);
         return parseData();
     }
 
  
+    string replaceDotsForColon(string s)
+    {
+        return s.Replace('.', ',');
+    }
 
     string deleteMultipleSpaces(string d)
     {
