@@ -13,4 +13,6 @@ public abstract class Atom:DataItem
         return position;
     }
 
+    public abstract VisualItem accept(Visitator visitator);
+
 }

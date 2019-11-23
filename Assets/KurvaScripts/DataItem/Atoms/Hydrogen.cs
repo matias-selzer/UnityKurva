@@ -8,4 +8,9 @@ public class Hydrogen : Atom
     {
         
     }
+
+    public override VisualItem accept(Visitator visitator)
+    {
+        return visitator.visit(this);
+    }
 }
