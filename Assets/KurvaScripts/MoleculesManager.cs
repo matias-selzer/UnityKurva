@@ -32,8 +32,16 @@ public class MoleculesManager : MonoBehaviour
             for(int i = 0; i < m.atomsCount(); i++)
             {
                 VisualItem newItem = VisualItemsFactory.getInstance().createVisualAtom(m.getAtom(i));
+                visualItems.Add(newItem);
+            }
+
+            for(int i = 0; i < m.bondsCount(); i++)
+            {
+                VisualItem newItem = new VisualBond(m.getBond(i).getInitAtom().getPosition(), m.getBond(i).getEndAtom().getPosition());
+                visualItems.Add(newItem);
             }
         }
+
 
     }
 }

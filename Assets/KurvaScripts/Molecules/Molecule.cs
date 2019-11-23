@@ -18,8 +18,18 @@ public class Molecule
         return atoms[pos];
     }
 
+    public Bond getBond(int pos)
+    {
+        return bonds[pos];
+    }
+
     public int atomsCount()
     {
         return atoms.Count;
+    }
+
+    public int bondsCount()
+    {
+        return bonds.Count;
     }
 }

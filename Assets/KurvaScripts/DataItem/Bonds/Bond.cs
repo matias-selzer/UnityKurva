@@ -11,4 +11,14 @@ public class Bond:DataItem
         originAtom = init;
         destAtom = end;
     }
+
+    public Atom getInitAtom()
+    {
+        return originAtom;
+    }
+
+    public Atom getEndAtom()
+    {
+        return destAtom;
+    }
 }
