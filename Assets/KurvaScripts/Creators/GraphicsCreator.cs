@@ -5,7 +5,7 @@ using UnityEngine;
 public class GraphicsCreator : MonoBehaviour
 {
     public GameObject basicSphere,basicCylinder;
-
+    /*
     private GraphicsCreator() { }
 
     private static GraphicsCreator instance;
@@ -15,10 +15,10 @@ public class GraphicsCreator : MonoBehaviour
         return instance;
     }
 
-    void Start()
+    void Awake()
     {
         instance = GetComponent<GraphicsCreator>();
-    }
+    }*/
 
     public GameObject createBasicSphere()
     {

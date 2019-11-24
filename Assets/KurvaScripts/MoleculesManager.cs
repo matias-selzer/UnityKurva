@@ -10,7 +10,9 @@ public class MoleculesManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        #if !UNITY_EDITOR && UNITY_WEBGL
+		                WebGLInput.captureAllKeyboardInput = false;
+        #endif
     }
 
     // Update is called once per frame
@@ -21,6 +23,7 @@ public class MoleculesManager : MonoBehaviour
 
     public void setMolecules(List<Molecule> molecules)
     {
+        Debug.Log("seteando moleculas en manager");
         this.molecules = molecules;
     }
 
@@ -43,9 +46,9 @@ public class MoleculesManager : MonoBehaviour
         }
     }
 
-    public void changeAlpha()
+    public void changeAlpha(float alpha)
     {
-        float alpha = 1f / molecules.Count;
+        //alpha = alpha / molecules.Count;
         foreach(VisualItem vItem in visualItems)
         {
             vItem.changeAlphaColor(alpha);

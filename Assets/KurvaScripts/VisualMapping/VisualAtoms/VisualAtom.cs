@@ -7,7 +7,8 @@ public abstract class VisualAtom : VisualItem
     protected static Vector3 defaultSize = Vector3.one*0.7f;
 
     public VisualAtom(Vector3 position){
-        visualObject = GraphicsCreator.getInstance().createBasicSphere();
+        visualObject=GameObject.Find("Manager").GetComponent<GraphicsCreator>().createBasicSphere();
+       // visualObject = GraphicsCreator.getInstance().createBasicSphere();
         visualObject.transform.position = position;
         visualObject.transform.localScale = defaultSize;
     } 
