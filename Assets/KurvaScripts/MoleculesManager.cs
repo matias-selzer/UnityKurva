@@ -21,7 +21,6 @@ public class MoleculesManager : MonoBehaviour
 
     public void setMolecules(List<Molecule> molecules)
     {
-        Debug.Log("seteando moleculas en manager");
         this.molecules = molecules;
     }
 

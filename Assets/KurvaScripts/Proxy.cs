@@ -10,7 +10,9 @@ public class Proxy : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Debug.Log("load molecules from proxy");
+        #if !UNITY_EDITOR && UNITY_WEBGL
+		                WebGLInput.captureAllKeyboardInput = false;
+        #endif
         loadMoleculesFromSDF(data);
     }
 

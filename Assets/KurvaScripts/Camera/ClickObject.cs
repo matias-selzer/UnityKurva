@@ -18,18 +18,6 @@ public class ClickObject : MonoBehaviour
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
 
-           /* if (Physics.Raycast(ray, out hit))
-            {
-                if (hit.transform.name == "Player")
-                {
-                    Debug.Log("This is a Player");
-                }
-                else
-                {
-                    Debug.Log(hit.transform.name);
-                }
-            }*/
-
             RaycastHit[] hits;
             hits = Physics.RaycastAll(ray);
 
@@ -43,10 +31,10 @@ public class ClickObject : MonoBehaviour
                 {
                     // Change the material of all hit colliders
                     // to use a transparent shader.
-                    rend.material.shader = Shader.Find("Outlined/UltimateOutline");
+                    //rend.material.shader = Shader.Find("Outlined/UltimateOutline");
                    // Color tempColor = rend.material.color;
                    // tempColor.a = 0.3F;
-                    //rend.material.color = Color.red;
+                    rend.material.color = Color.yellow;
                 }
             }
         }
