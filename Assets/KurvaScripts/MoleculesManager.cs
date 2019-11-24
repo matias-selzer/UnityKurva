@@ -41,7 +41,14 @@ public class MoleculesManager : MonoBehaviour
                 visualItems.Add(newItem);
             }
         }
+    }
 
-
+    public void changeAlpha()
+    {
+        float alpha = 0.5f / molecules.Count;
+        foreach(VisualItem vItem in visualItems)
+        {
+            vItem.changeAlphaColor(alpha);
+        }
     }
 }

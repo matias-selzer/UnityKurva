@@ -14,7 +14,7 @@ public class CameraMovement : MonoBehaviour
     public float maximumX = 360F;
     public float minimumY = -90F;
     public float maximumY = 90F;
-    float rotationY = -60F;
+    float rotationY = 0F;
 
     // For camera movement
     float CameraPanningSpeed = 10.0f;
@@ -112,6 +112,8 @@ public class CameraMovement : MonoBehaviour
             rotationY = Mathf.Clamp(rotationY, minimumY, maximumY);
 
             transform.localEulerAngles = new Vector3(-rotationY, transform.localEulerAngles.y, 0);
+            
+            
         }
     }
 
