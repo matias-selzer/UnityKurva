@@ -45,7 +45,7 @@ public class MoleculesManager : MonoBehaviour
 
     public void changeAlpha()
     {
-        float alpha = 0.5f / molecules.Count;
+        float alpha = 1f / molecules.Count;
         foreach(VisualItem vItem in visualItems)
         {
             vItem.changeAlphaColor(alpha);

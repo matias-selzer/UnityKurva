@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class VisualCarbon : VisualAtom
 { //default values
-    protected static Color defaultColor = Color.red;
+    protected static Color defaultColor = Color.black;
     
     public VisualCarbon(Vector3 position) : base(position)
     {

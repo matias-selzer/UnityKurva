@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class VisualNytrogen : VisualAtom
 { //default values
-    protected static Color defaultColor = Color.gray;
+    protected static Color defaultColor = Color.blue;
 
     public VisualNytrogen(Vector3 position) : base(position)
     {

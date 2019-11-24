@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class VisualHydrogen : VisualAtom
 { //default values
-    protected static Color defaultColor = Color.blue;
+    protected static Color defaultColor = Color.white;
 
     public VisualHydrogen(Vector3 position) : base(position)
     {

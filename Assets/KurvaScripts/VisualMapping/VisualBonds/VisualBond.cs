@@ -9,7 +9,7 @@ public class VisualBond : VisualItem
 
     public VisualBond(Vector3 initPos, Vector3 endPos)
     {
-        visualObject = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
+        visualObject = GraphicsCreator.getInstance().createBasicCylinder();
         Vector3 scaleAux = visualObject.transform.localScale;
         scaleAux.y = Vector3.Distance(initPos, endPos) / 2;
         scaleAux.x = 0.2f;

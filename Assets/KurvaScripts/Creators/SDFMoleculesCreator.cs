@@ -44,6 +44,7 @@ public class SDFMoleculesCreator : MoleculesCreator
         List<Bond> bonds = new List<Bond>();
         while (!reachEndOfFile())
         {
+            pos++;
             string[] line = getElementsOfSingleLine();
             if (isAtomsLine(line))
             {
@@ -65,7 +66,6 @@ public class SDFMoleculesCreator : MoleculesCreator
                 atoms = new List<Atom>();
                 bonds = new List<Bond>();
             }
-            pos++;
         }
         return molecules;
     }
