@@ -10,9 +10,7 @@ public class MoleculesManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        #if !UNITY_EDITOR && UNITY_WEBGL
-		                WebGLInput.captureAllKeyboardInput = false;
-        #endif
+
     }
 
     // Update is called once per frame
@@ -36,6 +34,7 @@ public class MoleculesManager : MonoBehaviour
             {
                 VisualItem newItem = VisualItemsFactory.getInstance().createVisualAtom(m.getAtom(i));
                 visualItems.Add(newItem);
+                Debug.Log(newItem.getPosition());
             }
 
             for(int i = 0; i < m.bondsCount(); i++)

@@ -25,5 +25,10 @@ public abstract class VisualItem
         visualObject.GetComponent<Renderer>().material.DisableKeyword("_ALPHAPREMULTIPLY_ON");
         visualObject.GetComponent<Renderer>().material.renderQueue = 3000;
     }
+
+    public Vector3 getPosition()
+    {
+        return visualObject.transform.position;
+    }
     
 }

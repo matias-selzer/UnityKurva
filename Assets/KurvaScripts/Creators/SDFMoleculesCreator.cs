@@ -13,7 +13,9 @@ public class SDFMoleculesCreator : MoleculesCreator
     public override List<Molecule> createMolecules(MoleculesData data)
     {
         string stringData = deleteMultipleSpaces(data.getStringData());
-        stringData = replaceDotsForColon(stringData);
+        #if UNITY_EDITOR
+                stringData = replaceDotsForColon(stringData);
+        #endif
         pos = 0;
         dataLines = getSeparateLines(stringData);
         return parseData();
