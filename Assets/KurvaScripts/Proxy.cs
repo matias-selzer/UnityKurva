@@ -39,4 +39,6 @@ public class Proxy : MonoBehaviour
         GetComponent<MoleculesManager>().renderMolecules();
         GetComponent<MoleculesManager>().changeAlpha(alpha);
     }
+
+    
 }

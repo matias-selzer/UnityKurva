@@ -34,7 +34,6 @@ public class MoleculesManager : MonoBehaviour
             {
                 VisualItem newItem = VisualItemsFactory.getInstance().createVisualAtom(m.getAtom(i));
                 visualItems.Add(newItem);
-                Debug.Log(newItem.getPosition());
             }
 
             for(int i = 0; i < m.bondsCount(); i++)
