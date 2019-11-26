@@ -33,7 +33,7 @@ public class CameraMovement : MonoBehaviour
         }
         else if (Input.GetMouseButton(1))
         {
-            MouseRightClick();
+            //MouseRightClick();
         }
         else if (Input.GetMouseButton(2))
         {
