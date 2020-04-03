@@ -10,6 +10,7 @@ public class MoleculeCreator : MonoBehaviour
 	public Material lineMaterial;
     private float generalAlpha;
     public GameObject containerPrefab;
+    public GameObject billboardBond;
     private Transform container;
 
     // Start is called before the first frame update
@@ -78,20 +79,76 @@ public class MoleculeCreator : MonoBehaviour
 	public void ShowBonds(List<Atom> atoms, List<Bond> bonds)
     {
 		for (int i = 0; i < bonds.Count; i++) {
-			Line l = Instantiate (line) as Line;
-            l.transform.parent = container.transform;
+            //Line l = Instantiate (line) as Line;
+            //l.transform.parent = container.transform;
 
             //Debug.Log("cant atoms: " + atoms.Count);
             //Debug.Log("begining: "+ ""+(((Bond)bonds[i]).startPos - 1));
             //Debug.Log("ending: " + "" + (((Bond)bonds[i]).endPos - 1));
-            
-            l.startingPoint = ((Atom)atoms [((Bond)bonds [i]).startPos-1]).getPosition ();
-			l.endPoint=((Atom)atoms [((Bond)bonds [i]).endPos-1]).getPosition ();
-			l.LineMaterial = lineMaterial;
-            Color c = lineMaterial.color;
+
+            // l.startingPoint = ((Atom)atoms [((Bond)bonds [i]).startPos-1]).getPosition ();
+            //l.endPoint=((Atom)atoms [((Bond)bonds [i]).endPos-1]).getPosition ();
+            //l.LineMaterial = lineMaterial;
+            // Color c = lineMaterial.color;
             //c.a = generalAlpha;
-            l.LineMaterial.color = c;
-			l.SetupLine ();
+            //l.LineMaterial.color = c;
+            //l.SetupLine ();
+
+            SpawnBond(((Atom)atoms[((Bond)bonds[i]).startPos - 1]).getPosition(), ((Atom)atoms[((Bond)bonds[i]).endPos - 1]).getPosition());
 		}
 	}
+
+    void SpawnBond(Vector3 startPos, Vector3 endPos)
+    {
+        GameObject newBond = Instantiate(billboardBond) as GameObject;
+
+        //LO DEJO POR LAS DUDAS
+
+        //Vector3 centerPos = new Vector3(startPos.x + endPos.x, startPos.y + endPos.y) / 2;
+        //newBond.transform.parent = container.transform;
+
+        /*float scaleX = Mathf.Abs(startPos.x - endPos.x);
+        float scaleY = Mathf.Abs(startPos.y - endPos.y);
+
+        centerPos.x -= 0.5f;
+        centerPos.y += 0.5f;
+        newBond.transform.position = centerPos;
+        newBond.transform.localScale = new Vector3(scaleX, scaleY, 1);
+        */
+
+        /*Vector3 between = endPos - startPos;
+        float distance = between.magnitude;
+        newBond.transform.localScale = new Vector3(between.x, between.y, between.z);
+        newBond.transform.position = startPos + (between / 2.0f);
+        newBond.transform.LookAt(endPos);
+
+        Color c = newBond.GetComponent<MeshRenderer>().material.color;
+        c.a = generalAlpha;
+        newBond.GetComponent<MeshRenderer>().material.color = c;
+
+        newBond.transform.parent = container.transform;*/
+
+
+        newBond.transform.position = (endPos + startPos) / 2.0F;
+
+        // Rotation
+        Vector3 dirV = Vector3.Normalize(endPos - startPos);
+
+        Vector3 rotAxisV = dirV + new Vector3(0,1,0);
+
+        rotAxisV = Vector3.Normalize(rotAxisV);
+
+        newBond.transform.rotation = new Quaternion(rotAxisV.x, rotAxisV.y, rotAxisV.z, 0);
+
+        // Scale        
+        float dist = Vector3.Distance(endPos, startPos);
+
+        newBond.transform.localScale = new Vector3(0.3f, dist / 2, 0.3f);
+
+        Color c = newBond.GetComponent<MeshRenderer>().material.color;
+        c.a = generalAlpha;
+        newBond.GetComponent<MeshRenderer>().material.color = c;
+
+        newBond.transform.parent = container.transform;
+    }
 }
