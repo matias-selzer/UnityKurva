@@ -47,7 +47,7 @@ LineRenderer:
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
   m_RenderingLayerMask: 1
-  m_RendererPriority: 0
+  m_RendererPriority: -44
   m_Materials:
   - {fileID: 2100000, guid: 8cb7f099e1a808044968b4bfd0ecaf8f, type: 2}
   m_StaticBatchInfo:
@@ -141,4 +141,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startingPoint: {x: 0, y: 0, z: 0}
   endPoint: {x: 0, y: 0, z: 0}
-  LineMaterial: {fileID: 0}
+  LineMaterial: {fileID: 2100000, guid: 8cb7f099e1a808044968b4bfd0ecaf8f, type: 2}
