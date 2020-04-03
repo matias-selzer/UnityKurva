@@ -42,10 +42,15 @@ public class SDFBabelParser : MonoBehaviour
     {
         GetComponent<MoleculeCreator>().InitializeStructure();
         sdfData = DeleteMultipleSpaces(sdfData);
-        string[] dataLines = GetSeparateNumbers(sdfData);
-       // PrintAll(dataLines);
+
+        string[] moleculesData = sdfData.Split(new string[] { "$$$$" }, StringSplitOptions.None);
+        foreach(string s in moleculesData)
+            new SDFMolecule(s);
+
+        /*string[] dataLines = GetSeparateNumbers(sdfData);
+        //PrintAll(dataLines);
         ParseMolecules(dataLines);
-        GetComponent<MoleculeCreator>().ShowMolecules();
+        GetComponent<MoleculeCreator>().ShowMolecules();*/
     }
 
     public void ChangeBackground (int r, int g, int b)
@@ -85,10 +90,19 @@ public class SDFBabelParser : MonoBehaviour
         }
 
         int cantAtoms = int.Parse(dataLines[pos++]);
-        int cantBonds = int.Parse(dataLines[pos++]);
+        int cantBonds;
+        if (cantAtoms > 100000)
+        {
+            cantBonds = cantAtoms % 1000;
+            cantAtoms = cantAtoms / 1000;
+        }
+        else
+        {
+            cantBonds = int.Parse(dataLines[pos++]);
+        }
 
-        //Debug.Log("cant atoms " + cantAtoms);
-       // Debug.Log("cant bonds " + cantBonds);
+        Debug.Log("cant atoms " + cantAtoms);
+        Debug.Log("cant bonds " + cantBonds);
 
         pos += definitionLine+1;
 
@@ -110,8 +124,18 @@ public class SDFBabelParser : MonoBehaviour
 
         for(int i = 0; i < cantBonds; i++)
         {
+            Debug.Log(dataLines[pos]);
             int begining = int.Parse(dataLines[pos]);
-            int ending = int.Parse(dataLines[pos+1]);
+            int ending;
+            if (begining > 10000)
+            {
+                ending = begining % 1000;
+                begining = begining / 1000;
+            }
+            else
+            {
+                ending = int.Parse(dataLines[pos + 1]);
+            }
             pos += 7;
             Bond b = new Bond(begining,ending);
             bonds.Add(b);
