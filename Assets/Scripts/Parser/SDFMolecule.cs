@@ -5,11 +5,11 @@ using UnityEngine;
 
 public class SDFMolecule
 {
-    private SDFHeader header;
+
     private SDFDefinitionLine definitionLine;
     private SDFAtoms atoms;
     private SDFBonds bonds;
-    private SDFEnding ending;
+
 
     public SDFMolecule(string data)
     {
@@ -20,13 +20,28 @@ public class SDFMolecule
         int headerPos = FindHeaderPos(moleculeDataLines);
         string header = moleculeDataLines[headerPos];
         string defLine = moleculeDataLines[headerPos + 1];
-        Debug.Log(header);
-        Debug.Log(defLine);
+        //Debug.Log(header);
+        //Debug.Log(defLine);
         definitionLine= new SDFDefinitionLine(defLine);
         atoms = new SDFAtoms(moleculeDataLines, headerPos + 2, definitionLine.GetCantAtoms());
         bonds = new SDFBonds(moleculeDataLines, headerPos + 2 + definitionLine.GetCantAtoms(), definitionLine.GetCantBonds());
     }
 
+    public SDFAtoms Atoms
+    {
+        get
+        {
+            return atoms;
+        }
+    }
+
+    public SDFBonds Bonds
+    {
+        get
+        {
+            return bonds;
+        }
+    }
 
     int FindHeaderPos(string[] moleculeDataLines)
     {

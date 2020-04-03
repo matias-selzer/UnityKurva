@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -13,6 +14,19 @@ public class SDFAtoms
         {
             data[i] = lines[i + init];
         }
-        Debug.Log("cant atoms: " + data.Length);
+        //Debug.Log("cant atoms: " + data.Length);
+    }
+
+    public string[] GetAtomLine(int pos)
+    {
+        return data[pos].Split(new string[] { " " }, StringSplitOptions.RemoveEmptyEntries);
+    }
+
+    public string[] Data
+    {
+        get
+        {
+            return data;
+        }
     }
 }

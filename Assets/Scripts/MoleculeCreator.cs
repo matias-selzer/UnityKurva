@@ -36,8 +36,10 @@ public class MoleculeCreator : MonoBehaviour
     {
         generalAlpha = 1.0f / molecules.Count;
         //Debug.Log("Cantidad de moleculas " + molecules.Count);
+        int i = 0;
         foreach(Molecule m in molecules)
         {
+            //Debug.Log("mole: " + i++);
             ShowAtoms(m.Atoms);
             ShowBonds(m.Atoms,m.Bonds);
         }
@@ -78,11 +80,16 @@ public class MoleculeCreator : MonoBehaviour
 		for (int i = 0; i < bonds.Count; i++) {
 			Line l = Instantiate (line) as Line;
             l.transform.parent = container.transform;
-			l.startingPoint = ((Atom)atoms [((Bond)bonds [i]).startPos-1]).getPosition ();
+
+            //Debug.Log("cant atoms: " + atoms.Count);
+            //Debug.Log("begining: "+ ""+(((Bond)bonds[i]).startPos - 1));
+            //Debug.Log("ending: " + "" + (((Bond)bonds[i]).endPos - 1));
+            
+            l.startingPoint = ((Atom)atoms [((Bond)bonds [i]).startPos-1]).getPosition ();
 			l.endPoint=((Atom)atoms [((Bond)bonds [i]).endPos-1]).getPosition ();
 			l.LineMaterial = lineMaterial;
             Color c = lineMaterial.color;
-            c.a = generalAlpha;
+            //c.a = generalAlpha;
             l.LineMaterial.color = c;
 			l.SetupLine ();
 		}
