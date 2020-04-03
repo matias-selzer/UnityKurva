@@ -31,14 +31,14 @@ public class SDFBabelParser : MonoBehaviour
             Debug.Log(s);
         }
     }
-/*
+
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
             ParseSDF(data2);
         }
-    }*/
+    }
 
     public void ParseSDF(string sdfData)
     {

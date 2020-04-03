@@ -6,8 +6,6 @@ public class MoleculeCreator : MonoBehaviour
 {
     private List<Molecule> molecules;
     public GameObject genericAtom;
-	public Line line;
-	public Material lineMaterial;
     private float generalAlpha;
     public GameObject containerPrefab;
     public GameObject billboardBond;
@@ -79,21 +77,6 @@ public class MoleculeCreator : MonoBehaviour
 	public void ShowBonds(List<Atom> atoms, List<Bond> bonds)
     {
 		for (int i = 0; i < bonds.Count; i++) {
-            //Line l = Instantiate (line) as Line;
-            //l.transform.parent = container.transform;
-
-            //Debug.Log("cant atoms: " + atoms.Count);
-            //Debug.Log("begining: "+ ""+(((Bond)bonds[i]).startPos - 1));
-            //Debug.Log("ending: " + "" + (((Bond)bonds[i]).endPos - 1));
-
-            // l.startingPoint = ((Atom)atoms [((Bond)bonds [i]).startPos-1]).getPosition ();
-            //l.endPoint=((Atom)atoms [((Bond)bonds [i]).endPos-1]).getPosition ();
-            //l.LineMaterial = lineMaterial;
-            // Color c = lineMaterial.color;
-            //c.a = generalAlpha;
-            //l.LineMaterial.color = c;
-            //l.SetupLine ();
-
             SpawnBond(((Atom)atoms[((Bond)bonds[i]).startPos - 1]).getPosition(), ((Atom)atoms[((Bond)bonds[i]).endPos - 1]).getPosition());
 		}
 	}
