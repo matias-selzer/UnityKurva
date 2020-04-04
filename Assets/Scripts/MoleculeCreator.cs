@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MoleculeCreator : MonoBehaviour
 {
@@ -10,6 +11,8 @@ public class MoleculeCreator : MonoBehaviour
     public GameObject containerPrefab;
     public GameObject billboardBond;
     private Transform container;
+
+    public Toggle bondsToggle, hToggle;
 
     // Start is called before the first frame update
     void Awake()
@@ -23,6 +26,8 @@ public class MoleculeCreator : MonoBehaviour
         GameObject newContainer = Instantiate(containerPrefab) as GameObject;
         container = newContainer.transform;
         molecules = new List<Molecule>();
+        bondsToggle.isOn = true;
+        hToggle.isOn = true;
     }
 
 
@@ -48,8 +53,17 @@ public class MoleculeCreator : MonoBehaviour
 		for (int i = 0; i < atoms.Count; i++) {
 			//Debug.Log (((Molecule)molecules [i]).getType().Equals ("C"));
 			GameObject newAtom = Instantiate (genericAtom, ((Atom)atoms [i]).getPosition (), transform.rotation)as GameObject;
-            newAtom.transform.parent = container;
+            //newAtom.transform.parent = container;
             ChangeAtomColor(newAtom, ((Atom)atoms[i]).getType());
+            if (((Atom)atoms[i]).getType().Equals("H"))
+            {
+                container.GetComponent<MoleculsGraphicContainer>().InsertHAtom(newAtom);
+            }
+            else
+            {
+                container.GetComponent<MoleculsGraphicContainer>().InsertAtom(newAtom);
+            }
+            
 		}
 	}
 
@@ -77,11 +91,22 @@ public class MoleculeCreator : MonoBehaviour
 	public void ShowBonds(List<Atom> atoms, List<Bond> bonds)
     {
 		for (int i = 0; i < bonds.Count; i++) {
-            SpawnBond(((Atom)atoms[((Bond)bonds[i]).startPos - 1]).getPosition(), ((Atom)atoms[((Bond)bonds[i]).endPos - 1]).getPosition());
-		}
+            Atom start = ((Atom)atoms[((Bond)bonds[i]).startPos - 1]);
+            Atom end = ((Atom)atoms[((Bond)bonds[i]).endPos - 1]);
+            GameObject newBond= SpawnBond(start.getPosition(), end.getPosition());
+
+            if (start.getType().Equals("H") || end.getType().Equals("H"))
+            {
+                container.GetComponent<MoleculsGraphicContainer>().InsertHBond(newBond);
+            }
+            else
+            {
+                container.GetComponent<MoleculsGraphicContainer>().InsertBond(newBond);
+            }
+        }
 	}
 
-    void SpawnBond(Vector3 startPos, Vector3 endPos)
+    GameObject SpawnBond(Vector3 startPos, Vector3 endPos)
     {
         GameObject newBond = Instantiate(billboardBond) as GameObject;
 
@@ -132,6 +157,19 @@ public class MoleculeCreator : MonoBehaviour
         c.a = generalAlpha;
         newBond.GetComponent<MeshRenderer>().material.color = c;
 
-        newBond.transform.parent = container.transform;
+        //newBond.transform.parent = container.transform;
+        return newBond;
     }
+
+
+    public void ToggleBonds()
+    {
+        container.GetComponent<MoleculsGraphicContainer>().ToggleBonds(bondsToggle.isOn);
+    }
+
+    public void ToggleHAtoms()
+    {
+        container.GetComponent<MoleculsGraphicContainer>().ToggleHAtoms(hToggle.isOn);
+    }
+
 }

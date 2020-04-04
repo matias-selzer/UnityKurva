@@ -34,7 +34,7 @@ public class SDFBabelParser : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Mouse0))
+        if (Input.GetKeyDown(KeyCode.Space))
         {
             ParseSDF(data2);
         }
