@@ -34,7 +34,7 @@ public class CameraOrbit : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.LeftShift))
             CameraDisabled = !CameraDisabled;
 
-        if (!CameraDisabled && Input.GetMouseButton(0))
+        if (!CameraDisabled && Input.GetMouseButton(0) && !SliderTouch.isTouching)
         {
             //Rotation of the Camera based on Mouse Coordinates
             if (Input.GetAxis("Mouse X") != 0 || Input.GetAxis("Mouse Y") != 0)
