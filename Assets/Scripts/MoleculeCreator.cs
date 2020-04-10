@@ -237,9 +237,8 @@ public class MoleculeCreator : MonoBehaviour
 
     private void ChangeAtomColor(GameObject atom, string c,float opacity)
     {
-        Color newColor = AtomsDictionaryUtils.GetAtomColor(c);
-        //Color newColor;
-        /*if (c.Equals("H"))
+        Color newColor;
+        if (c.Equals("H"))
         {
             newColor = Color.white;
         }else if (c.Equals("C"))
@@ -252,7 +251,7 @@ public class MoleculeCreator : MonoBehaviour
         else // O 
         {
             newColor = Color.red;
-        }*/
+        }
         //newColor.a = generalOpacity;
         //Debug.Log(opacity);
         newColor.a = opacity;
