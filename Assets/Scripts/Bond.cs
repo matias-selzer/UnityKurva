@@ -6,8 +6,6 @@ public class Bond
 {
 
 	public int startPos,endPos;
-    private GameObject graphicBond;
-    private  float size;
 
 	public Bond (){
 	}
@@ -17,29 +15,4 @@ public class Bond
 		this.endPos = endPos;
 	}
 
-    public GameObject GraphicBond
-    {
-        get
-        {
-            return graphicBond;
-        }
-
-        set
-        {
-            graphicBond = value;
-        }
-    }
-
-    public float Size
-    {
-        get
-        {
-            return size;
-        }
-
-        set
-        {
-            size = value;
-        }
-    }
 }

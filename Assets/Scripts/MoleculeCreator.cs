@@ -7,27 +7,18 @@ public class MoleculeCreator : MonoBehaviour
 {
     private List<Molecule> molecules;
     public GameObject genericAtom;
+    private float generalAlpha;
     public GameObject containerPrefab;
     public GameObject billboardBond;
     private Transform container;
-    private ThreeDeeMatix matrix;
 
-    public Toggle bondsToggle, hToggle,invertOpacityToggle;
-    public Slider densitySlider,atomsSizeSlider,bondsSizeSlider,opacitySlider;
-
-    private float generalOpacity;
-
-    private bool invertOpacity = false;
-
-    private float densityFilter = 0.0f, atomsSize = 1, bondsSize = 1;
+    public Toggle bondsToggle, hToggle;
 
     // Start is called before the first frame update
     void Awake()
     {
         molecules = new List<Molecule>();
     }
-
-
 
     public void InitializeStructure()
     {
@@ -45,148 +36,25 @@ public class MoleculeCreator : MonoBehaviour
         molecules.Add(new Molecule(atoms, bonds));
 	}
 
-    public void ShowMolecules(ThreeDeeMatix mat)
+    public void ShowMolecules()
     {
-        matrix = mat;
-        InsertAtomsInMatrix();
-
+        generalAlpha = 1.0f / molecules.Count;
+        //Debug.Log("Cantidad de moleculas " + molecules.Count);
+        int i = 0;
         foreach(Molecule m in molecules)
         {
+            //Debug.Log("mole: " + i++);
             ShowAtoms(m.Atoms);
             ShowBonds(m.Atoms,m.Bonds);
         }
-
-        matrix.AssignDensityLevel();
-        atomsSize = atomsSizeSlider.value;
-        bondsSize = bondsSizeSlider.value;
-        generalOpacity = opacitySlider.value;
-        UpdateVisualization();
-        densitySlider.maxValue = matrix.MaxAtomsInCell;
-        // matrix.PrintAllMatrix();
-    }
-
-    private void InsertAtomsInMatrix()
-    {
-        foreach (Molecule m in molecules)
-        {
-            foreach(Atom a in m.Atoms)
-            {
-                matrix.InsertAtom(a);
-            }
-        }
-    }
-
-    private void UpdateVisualization()
-    {
-        foreach (Molecule m in molecules)
-        {
-            foreach (Atom a in m.Atoms)
-            {
-                float density=a.Density;
-
-                if (!invertOpacity)
-                {
-                    if (densityFilter < density)
-                    {
-                        ChangeAtomColor(a.GraphicAtom, a.getType(), GetAtomOpacity(density));
-                    }
-                    else
-                    {
-                        ChangeAtomColor(a.GraphicAtom, a.getType(), 0);
-                    }
-                }
-                else
-                {
-                    if (densityFilter > density)
-                    {
-                        ChangeAtomColor(a.GraphicAtom, a.getType(), GetAtomOpacity(density));
-                    }
-                    else
-                    {
-                        ChangeAtomColor(a.GraphicAtom, a.getType(), 0);
-                    }
-                }
-
-                ChangeAtomSize(a);
-                
-            }
-            foreach(Bond b in m.Bonds)
-            {
-                ChangeBondColor(b, m.Atoms);
-                ChangeBondSize(b);
-            }
-        }
-    }
-
-    private float GetAtomOpacity(float density)
-    {
-        float toReturn = 0;
-        toReturn = generalOpacity * (density / matrix.MaxAtomsInCell);
-        bool smallDensityThreshold = density < matrix.MaxAtomsInCell * 0.3f;
-        if (invertOpacity)
-        {
-            toReturn = generalOpacity * (1-((density)/matrix.MaxAtomsInCell));
-            if (!smallDensityThreshold) toReturn /= matrix.MaxAtomsInCell;
-        } 
-        return toReturn;
-    }
-
-
-    private void ChangeAtomSize(Atom a)
-    {
-        a.GraphicAtom.transform.localScale = new Vector3(atomsSize, atomsSize, atomsSize);
-    }
-
-    private void ChangeBondSize(Bond b)
-    {
-        b.GraphicBond.transform.localScale = new Vector3(bondsSize, b.GraphicBond.transform.localScale.y, bondsSize);
-    }
-
-    private void ChangeBondColor(Bond bond,List<Atom> atoms)
-    {
-        Atom start = ((Atom)atoms[((Bond)bond).startPos - 1]);
-        Atom end = ((Atom)atoms[((Bond)bond).endPos - 1]);
-
-        float bondOpacity;
-
-        if (!invertOpacity)
-        {
-
-            if (densityFilter < start.Density && densityFilter < end.Density)
-            {
-                bondOpacity = (GetAtomOpacity(start.Density) + GetAtomOpacity(end.Density)) / 2.0f;
-            }
-            else
-            {
-                bondOpacity = 0;
-            }
-        }
-        else
-        {
-            if (densityFilter > start.Density || densityFilter > end.Density)
-            {
-                bondOpacity = (GetAtomOpacity(start.Density) + GetAtomOpacity(end.Density)) / 2.0f;
-            }
-            else
-            {
-                bondOpacity = 0;
-            }
-        }
-
-        Color c = bond.GraphicBond.GetComponent<MeshRenderer>().material.color;
-        //if (bondOpacity <= 0.5f) bondOpacity = 0;
-        c.a = bondOpacity;
-        bond.GraphicBond.GetComponent<MeshRenderer>().material.color = c;
     }
 
 	public void ShowAtoms(List<Atom> atoms){
 		for (int i = 0; i < atoms.Count; i++) {
-
+			//Debug.Log (((Molecule)molecules [i]).getType().Equals ("C"));
 			GameObject newAtom = Instantiate (genericAtom, ((Atom)atoms [i]).getPosition (), transform.rotation)as GameObject;
-            //newAtom.transform.localScale /= 3.0f;
-            ((Atom)atoms[i]).GraphicAtom = newAtom;
-
-            //ChangeAtomColor(newAtom, ((Atom)atoms[i]).getType(), ((Atom)atoms[i]).GetOpacity());
+            //newAtom.transform.parent = container;
+            ChangeAtomColor(newAtom, ((Atom)atoms[i]).getType());
             if (((Atom)atoms[i]).getType().Equals("H"))
             {
                 container.GetComponent<MoleculsGraphicContainer>().InsertHAtom(newAtom);
@@ -199,43 +67,7 @@ public class MoleculeCreator : MonoBehaviour
 		}
 	}
 
-
-
-    public void OnChangeAtomsSizeSlider()
-    {
-        atomsSize = atomsSizeSlider.value;
-        UpdateVisualization();
-    }
-
-    public void OnChangeBondsSizeSlider()
-    {
-        bondsSize = bondsSizeSlider.value;
-        UpdateVisualization();
-    }
-
-    public void OnChangeDensitySlider()
-    {
-        if (invertOpacity)
-        {
-            densityFilter = densitySlider.maxValue-densitySlider.value;
-        }
-        else
-        {
-            densityFilter = densitySlider.value;
-        }
-        
-        //matrix.AssignOpacityLevel(opacityFilter);
-
-        UpdateVisualization();
-    }
-
-    public void OnChangeOpacitySlider()
-    {
-        generalOpacity = opacitySlider.value;
-        UpdateVisualization();
-    }
-
-    private void ChangeAtomColor(GameObject atom, string c,float opacity)
+    private void ChangeAtomColor(GameObject atom, string c)
     {
         Color newColor;
         if (c.Equals("H"))
@@ -252,24 +84,16 @@ public class MoleculeCreator : MonoBehaviour
         {
             newColor = Color.red;
         }
-        //newColor.a = generalOpacity;
-        //Debug.Log(opacity);
-        newColor.a = opacity;
+        newColor.a = generalAlpha;
         atom.GetComponent<MeshRenderer>().material.color = newColor;
     }
-
-
 
 	public void ShowBonds(List<Atom> atoms, List<Bond> bonds)
     {
 		for (int i = 0; i < bonds.Count; i++) {
             Atom start = ((Atom)atoms[((Bond)bonds[i]).startPos - 1]);
             Atom end = ((Atom)atoms[((Bond)bonds[i]).endPos - 1]);
-            float bondOpacity = (start.GetOpacity() + end.GetOpacity()) / 2.0f;
-            GameObject newBond= SpawnBond(start.getPosition(), end.getPosition(),bondOpacity);
-            ((Bond)bonds[i]).GraphicBond = newBond;
-
-           
+            GameObject newBond= SpawnBond(start.getPosition(), end.getPosition());
 
             if (start.getType().Equals("H") || end.getType().Equals("H"))
             {
@@ -282,7 +106,7 @@ public class MoleculeCreator : MonoBehaviour
         }
 	}
 
-    GameObject SpawnBond(Vector3 startPos, Vector3 endPos,float opacity)
+    GameObject SpawnBond(Vector3 startPos, Vector3 endPos)
     {
         GameObject newBond = Instantiate(billboardBond) as GameObject;
 
@@ -328,12 +152,11 @@ public class MoleculeCreator : MonoBehaviour
         float dist = Vector3.Distance(endPos, startPos);
 
         newBond.transform.localScale = new Vector3(0.3f, dist / 2, 0.3f);
-        /*
+
         Color c = newBond.GetComponent<MeshRenderer>().material.color;
-        if (opacity <= 0.5f) opacity = 0;
-        c.a = opacity;
+        c.a = generalAlpha;
         newBond.GetComponent<MeshRenderer>().material.color = c;
-        */
+
         //newBond.transform.parent = container.transform;
         return newBond;
     }
@@ -347,12 +170,6 @@ public class MoleculeCreator : MonoBehaviour
     public void ToggleHAtoms()
     {
         container.GetComponent<MoleculsGraphicContainer>().ToggleHAtoms(hToggle.isOn);
-    }
-
-    public void ToggleInvertOpacity()
-    {
-        invertOpacity = invertOpacityToggle.isOn;
-        UpdateVisualization();
     }
 
 }

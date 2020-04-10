@@ -16,9 +16,6 @@ public class SDFBabelParser : MonoBehaviour
 
     private List<SDFMolecule> molecules;
 
-
-    private float maxX=0, maxY=0, maxZ = 0, minX = 0, minY = 0, minZ = 0;
-
     void Start()
     {
         #if !UNITY_EDITOR && UNITY_WEBGL
@@ -57,9 +54,7 @@ public class SDFBabelParser : MonoBehaviour
 
         ParseData();
 
-        ThreeDeeMatix matrix = new ThreeDeeMatix(1, maxX, maxY, maxZ, minX, minY, minZ);
-
-        GetComponent<MoleculeCreator>().ShowMolecules(matrix);
+        GetComponent<MoleculeCreator>().ShowMolecules();
     }
 
     private void ParseData()
@@ -74,7 +69,6 @@ public class SDFBabelParser : MonoBehaviour
                 float x = float.Parse(atomLine[0]);
                 float y = float.Parse(atomLine[1]);
                 float z = float.Parse(atomLine[2]);
-                CheckMinAndMax(x, y, z);
                 string type = atomLine[3];
                 Atom a = new Atom(x, y, z, type);
                 atoms.Add(a);
@@ -90,24 +84,6 @@ public class SDFBabelParser : MonoBehaviour
             }
             CreateMolecule(atoms, bonds);
         }
-        //PrintMinAndMax();
-    }
-
-    private void CheckMinAndMax(float x, float y,float z)
-    {
-        if (x < minX) minX = x;
-        if (x > maxX) maxX = x;
-        if (y < minY) minY = y;
-        if (y > maxY) maxY = y;
-        if (z < minZ) minZ = z;
-        if (z > maxZ) maxZ = z;
-    }
-
-    private void PrintMinAndMax()
-    {
-        Debug.Log("x: " + minX + " - " + maxX);
-        Debug.Log("y: " + minY + " - " + maxY);
-        Debug.Log("z: " + minZ + " - " + maxZ);
     }
 
     public void ChangeBackground (int r, int g, int b)
