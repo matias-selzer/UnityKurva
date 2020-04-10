@@ -105,6 +105,9 @@ public class MoleculeCreator : MonoBehaviour
 
     private void ChangeAtomColor(GameObject atom, string c,float opacity)
     {
+<<<<<<< HEAD
+>>>>>>> parent of 4f30dd5... Dictionary for atoms types added
+=======
 >>>>>>> parent of 4f30dd5... Dictionary for atoms types added
         Color newColor;
         if (c.Equals("H"))
@@ -122,8 +125,11 @@ public class MoleculeCreator : MonoBehaviour
             newColor = Color.red;
         }
 <<<<<<< HEAD
+<<<<<<< HEAD
         newColor.a = generalAlpha;
 =======
+=======
+>>>>>>> parent of 4f30dd5... Dictionary for atoms types added
         //newColor.a = generalOpacity;
         //Debug.Log(opacity);
         newColor.a = opacity;
