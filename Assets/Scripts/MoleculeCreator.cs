@@ -69,6 +69,43 @@ public class MoleculeCreator : MonoBehaviour
 
     private void ChangeAtomColor(GameObject atom, string c)
     {
+<<<<<<< HEAD
+=======
+        atomsSize = atomsSizeSlider.value;
+        UpdateVisualization();
+    }
+
+    public void OnChangeBondsSizeSlider()
+    {
+        bondsSize = bondsSizeSlider.value;
+        UpdateVisualization();
+    }
+
+    public void OnChangeDensitySlider()
+    {
+        if (invertOpacity)
+        {
+            densityFilter = densitySlider.maxValue-densitySlider.value;
+        }
+        else
+        {
+            densityFilter = densitySlider.value;
+        }
+        
+        //matrix.AssignOpacityLevel(opacityFilter);
+
+        UpdateVisualization();
+    }
+
+    public void OnChangeOpacitySlider()
+    {
+        generalOpacity = opacitySlider.value;
+        UpdateVisualization();
+    }
+
+    private void ChangeAtomColor(GameObject atom, string c,float opacity)
+    {
+>>>>>>> parent of 4f30dd5... Dictionary for atoms types added
         Color newColor;
         if (c.Equals("H"))
         {
@@ -84,7 +121,13 @@ public class MoleculeCreator : MonoBehaviour
         {
             newColor = Color.red;
         }
+<<<<<<< HEAD
         newColor.a = generalAlpha;
+=======
+        //newColor.a = generalOpacity;
+        //Debug.Log(opacity);
+        newColor.a = opacity;
+>>>>>>> parent of 4f30dd5... Dictionary for atoms types added
         atom.GetComponent<MeshRenderer>().material.color = newColor;
     }
 
